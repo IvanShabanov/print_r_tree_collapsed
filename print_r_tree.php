@@ -15,15 +15,13 @@ function print_r_tree($data, $level = 0, $parent = '')
                 $out .= print_r_tree($val, $level + 1, $parent.$item);
                 $out .= '</div>';
             } else {
-                $out .= print_r_tree($val, $level + 1, $parent.$item);
+                $out .= '<pre style="display: none;">'.str_replace('<' , '&lt;', $val).'</pre>';
             }
             $out .= '</div>';
         }
-    } else {
-        $out .= '<pre style="display: none;">'.str_replace('<' , '&lt;', $data).'</pre>';
-    }
+    };
     if ($level == 0) {
         echo $out;
-    }
+    };
     return $out;
 };
