@@ -7,25 +7,30 @@ function print_r_tree($data, $level = 0, $parent = '')
     }
     $type = gettype($data);
     if ($type == 'array') {
+        if ($level > 0) {
+            $out .= '<div style="display: none; padding: 5px; border: 1px solid #000;">';
+        };
         foreach ($data as $key=>$val) {
             $item = '["'.$key. '"]';
-            $value =
-            $out .= '<div><div onclick="showinner(this);">'.$parent.$item.' &nbsp; &nbsp; ('.count($val).') &nbsp; &nbsp; '.$type. '</div>';
-            $out .= '<div style="display: none; padding: 20px; border: 1px solid #000;">';
+            $out .= '<div><div onclick="showinner(this);" style="padding: 5px;">'.gettype($val). ' '.$parent.$item.' &nbsp; &nbsp; ('.count($val).')</div>';
+
             $out .= print_r_tree($val, $level + 1, $parent.$item);
+
             $out .= '</div>';
+        };
+        if ($level > 0) {
             $out .= '</div>';
-        }
+        };
     } else if ($type == 'boolean') {
         if ($data) {
-            $out .= '<pre style="display: none;">TRUE</pre>';
+            $out .= '<pre style="display: none;  padding: 5px; border: 1px solid #000;">TRUE</pre>';
         } else {
-            $out .= '<pre style="display: none;">FALSE</pre>';
+            $out .= '<pre style="display: none;  padding: 5px; border: 1px solid #000;">FALSE</pre>';
         }
     } else if (in_array($type , array('integer', 'double', 'float', 'string')) ){
-        $out .= '<pre style="display: none;">'.str_replace('<' , '&lt;', $data).'</pre>';
+        $out .= '<pre style="display: none;  padding: 5px; border: 1px solid #000;">'.str_replace('<' , '&lt;', $data).'</pre>';
     } else {
-        $out .= '<pre style="display: none;">'.print_r($data, true).'</pre>';
+        $out .= '<pre style="display: none;  padding: 5px; border: 1px solid #000;">'.print_r($data, true).'</pre>';
     };
     if ($level == 0) {
         echo $out;
