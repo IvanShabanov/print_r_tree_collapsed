@@ -12,7 +12,13 @@ function print_r_tree($data, $level = 0, $parent = '')
         };
         foreach ($data as $key=>$val) {
             $item = '["'.$key. '"]';
-            $out .= '<div><div onclick="showinner(this);" style="padding: 5px;">'.gettype($val). ' '.$parent.$item.' &nbsp; &nbsp; ('.count($val).')</div>';
+            $valtype = gettype($val);
+            if ($valtype == 'array') {
+                $count = '('.count($val).')';
+            } else if (in_array($valtype , array('integer', 'double', 'float', 'string')) ){
+                $count = '('.strlen($val).')';
+            };
+            $out .= '<div><div onclick="showinner(this);" style="padding: 5px;">'.gettype($val). ' '.$parent.$item.' &nbsp; &nbsp; '.$count.'</div>';
 
             $out .= print_r_tree($val, $level + 1, $parent.$item);
 
